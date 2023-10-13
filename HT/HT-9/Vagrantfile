@@ -1,0 +1,53 @@
+Vagrant.configure("2") do |config|
+  
+  config.vm.define "prometheus" do |prometheus|
+  prometheus.vm.box = "bento/ubuntu-22.04"
+  prometheus.vm.hostname = "prometheus"
+
+  config.vm.provider "virtualbox" do |vb|
+    # Customize the amount of memory on the VM:
+    vb.memory = "1024"
+    vb.cpus = 1
+  end
+  prometheus.vm.network "public_network", type: "static", ip: "192.168.31.10" # Налаштування статичної IP-адреси
+  prometheus.vm.provision "shell", inline: <<-SHELL
+    apt-get update
+    sudo apt-get install -y prometheus
+    sudo systemctl start prometheus
+    sudo systemctl enable prometheus
+    sudo grep "localhost:9100" /etc/prometheus/prometheus.yml
+    sudo sed -i 's/localhost:9100/192.168.31.11:9100/g' /etc/prometheus/prometheus.yml
+    sudo systemctl restart prometheus
+
+
+  SHELL
+  end
+
+  config.vm.define "nodeexporter" do |nodeexporter|
+  nodeexporter.vm.box = "bento/ubuntu-22.04"
+  nodeexporter.vm.hostname = "nodeexporter"
+  
+  config.vm.provider "virtualbox" do |vb|
+    # Customize the amount of memory on the VM:
+    vb.memory = "1024"
+    vb.cpus = 1
+  end
+  config.vm.synced_folder "./data", "/vagrant_data"
+  nodeexporter.vm.network "public_network", type: "static", ip: "192.168.31.11" # Налаштування статичної IP-адреси
+  nodeexporter.vm.provision "shell", inline: <<-SHELL
+    apt-get update
+    wget https://github.com/prometheus/node_exporter/releases/download/v1.6.1/node_exporter-1.6.1.linux-amd64.tar.gz
+    tar xvfz node_exporter-1.6.1.linux-amd64.tar.gz
+    cd node_exporter-1.6.1.linux-amd64
+    sudo cp node_exporter /usr/local/bin/
+    sudo cp /vagrant_data/node_exporter.service /etc/systemd/system/node_exporter.service
+    sudo useradd -rs /bin/false node_exporter
+    sudo chown node_exporter:node_exporter /usr/local/bin/node_exporter
+    sudo systemctl daemon-reload
+    sudo systemctl start node_exporter
+    sudo systemctl enable node_exporter
+    sudo systemctl restart node_exporter
+
+  SHELL
+  end
+end
