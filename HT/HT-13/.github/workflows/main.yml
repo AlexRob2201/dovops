@@ -1,18 +1,25 @@
-name: CI
+name: Python application
 
 on:
   push:
-    branches:
-      - main  
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
-  test:
+  build:
+
     runs-on: ubuntu-latest
 
     steps:
-    - name: Run tests
-      run: python -m unittest discover tests
-
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.12"
+    - name: Test with unittest
+      run: |
+        python -m unittest discover data
     - name: Notify on failure (Email)
       if: failure()
       env:

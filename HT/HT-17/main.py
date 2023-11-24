@@ -1,6 +1,7 @@
 import json
 import requests
 import logging
+import sys
 
 
 class LinkParser():
@@ -43,6 +44,10 @@ class LinkParser():
                 if self.verbose:
                     self.logger.info(f"Found userId: {user_id}")
         return self.data
+    
+    def get_args(self):
+        print(sys.args[1]) 
+    
 
 if __name__ == "__main__":
     parser = LinkParser(verbose=False)  
