@@ -1,4 +1,6 @@
 from main import MySql
+import unittest
+
 
 class MyShop(MySql):
     def create_shop(self):
