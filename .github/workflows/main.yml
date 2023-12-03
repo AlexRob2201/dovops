@@ -20,7 +20,7 @@ jobs:
 
     - name: Run Unit Tests
       run: |
-        python -m unittest discover tests
+        python -m unittest discover HT/HT-13/tests
 
     - name: Notify on Failure
       if: failure()
