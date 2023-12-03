@@ -1,0 +1,35 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Run Unit Tests
+      run: |
+        python -m unittest discover tests
+
+    - name: Notify on Failure
+      if: failure()
+      run: |
+        # Here you can set up notifications using your preferred communication tool
+        # For example, sending an email using SendGrid
+        echo "Unit tests failed. Sending email notification..."
+        echo "To: buxenko2201@gmail.com" >> email.txt
+        echo "Subject: Test Failure Notification" >> email.txt
+        echo "" >> email.txt
+        echo "Unit tests failed. Please check the build logs for details." >> email.txt
+        cat email.txt | sendmail -t
