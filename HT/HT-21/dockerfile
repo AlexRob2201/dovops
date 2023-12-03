@@ -1,0 +1,7 @@
+FROM python:3.9.18
+
+WORKDIR /py
+
+COPY [--chmod=777] main.py /py/main.py
+
+CMD ["python", "main.py"]
