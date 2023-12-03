@@ -15,6 +15,7 @@ class GetHandler(BaseHTTPRequestHandler):
         # Записати параметри у файл
         with open('log.txt', 'a') as log_file:
             log_file.write(f"{datetime.now()} - GET Request: {query_params}\n")
+            print (f"Recopded to tog file next data -{datetime.now()} - GET Request: {query_params}\n")
 
         # Відправте відповідь клієнту
         self.send_response(200)
