@@ -18,8 +18,9 @@ jobs:
       with:
         python-version: 3.12
     
-    - name: Print Directory Structure
+    - name: RUT tests
       run: |
-        ls -R
-        ls -R HT
+        cd HT/HT-13
+        python -m unittest discover tests
+
 
