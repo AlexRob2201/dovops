@@ -20,16 +20,6 @@ jobs:
 
     - name: Run Unit Tests
       run: |
-        python -m unittest discover HT/HT-13/tests
+        python -m unittest discover HT.HT-13.tests
 
-    - name: Notify on Failure
-      if: failure()
-      run: |
-        # Here you can set up notifications using your preferred communication tool
-        # For example, sending an email using SendGrid
-        echo "Unit tests failed. Sending email notification..."
-        echo "To: buxenko2201@gmail.com" >> email.txt
-        echo "Subject: Test Failure Notification" >> email.txt
-        echo "" >> email.txt
-        echo "Unit tests failed. Please check the build logs for details." >> email.txt
-        cat email.txt | sendmail -t
+
