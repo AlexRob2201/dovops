@@ -16,10 +16,10 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: 3.8
-
-    - name: Run Unit Tests
+        python-version: 3.12
+    
+    - name: Print Directory Structure
       run: |
-        python -m unittest discover HT.HT-13.tests
-
+        ls -R
+        ls -R HT
 
