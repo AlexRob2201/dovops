@@ -1,0 +1,5 @@
+2023-12-03 21:51:00.138731 - GET Request: {'param1': ['value1'], 'param2': ['value2']}
+2023-12-03 21:51:00.846748 - GET Request: {'param1': ['value1'], 'param2': ['value2']}
+2023-12-03 21:51:01.397075 - GET Request: {'param1': ['value1'], 'param2': ['value2']}
+2023-12-03 21:51:06.121534 - GET Request: {'param1': ['value1'], 'param2': ['value2']}
+2023-12-03 21:51:09.203939 - GET Request: {'param1': ['value1'], 'param2': ['value223']}
