@@ -1,0 +1,2 @@
+2023-12-03 20:05:27.638841 - GET Request: {'param1': ['DAN_IT'], 'param2': ['HT-21']}
+2023-12-03 20:06:18.035898 - GET Request: {'param1': ['DAN_IT'], 'param2': ['HT-21'], 'par3': ['some']}
