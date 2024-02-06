@@ -1,0 +1,26 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Build the Docker image
+        run: |
+          tag=$(date +%s)
+          docker build . --file Dockerfile --tag alexrob2201/ht-25:$tag
+          docker tag alexrob2201/ht-25:$tag alexrob2201/ht-25:latest
+
+      - name: Push the Docker image
+        run: |
+          docker push alexrob2201/ht-25:$tag
+          docker push alexrob2201/ht-25:latest
+
