@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  jenkins:
+    image: jenkins/jenkins:lts-jdk11
+    container_name: jenkins
+    restart: always
+    privileged: true
+    user: root
+    ports:
+      - "8080:8080"  # Jenkins web interface port
+      - "50000:50000"  # Jenkins slave port
+    volumes:
+      - ./jenkins_home:/var/jenkins_home  # Persist Jenkins data
+    networks:
+      - net
+
+  jenkins-worker:
+    image: jenkins/inbound-agent
+    container_name: jenkins-worker
+    environment:
+      - JENKINS_URL=http://jenkins:8080
+      - JENKINS_SECRET=secret
+      - JENKINS_AGENT_NAME=worker
+    networks:
+      - net
+    depends_on:
+      - jenkins
+
+
+
+networks:
+  net:
+
+volumes:
+  jenkins_home:
