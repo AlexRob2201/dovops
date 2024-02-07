@@ -1,0 +1,26 @@
+version: "3.9"
+services:
+  app:
+    tty: true
+    image: ghcr.io/alexrob2201/hometask:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+  app-coverage:
+    container_name: app-coverage
+    tty: true
+    image: ghcr.io/alexrob2201/hometask:tests
+    build:
+      context: .
+      dockerfile: Dockerfile_tests
+    entrypoint: bash -c "rm -rf htmlcov/* && python3 -m coverage run -m unittest && python3 -m coverage html"
+    volumes:
+      - ./coverage:/workdir/htmlcov
+
+  mysql:
+    image: mysql:5.7.44
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+    ports:
+      - 3306:3306
