@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   jenkins:
-    image: jenkins/jenkins:lts-jdk11
+    image: jenkins/jenkins:lts-jdk17
     container_name: jenkins
     restart: always
     privileged: true
@@ -11,17 +11,19 @@ services:
       - "8080:8080"  # Jenkins web interface port
       - "50000:50000"  # Jenkins slave port
     volumes:
-      - ./jenkins_home:/var/jenkins_home  # Persist Jenkins data
+      - ./jenkins_home:/var/jenkins_home  
     networks:
       - net
 
   jenkins-worker:
-    image: jenkins/inbound-agent
+    #image: jenkins/inbound-agent
+    build: 
+      context: .
     container_name: jenkins-worker
-    environment:
-      - JENKINS_URL=http://jenkins:8080
-      - JENKINS_SECRET=secret
-      - JENKINS_AGENT_NAME=worker
+    command: "-url http://jenkins:8080 -workDir=/home/jenkins/agent 8a9afbb181af997f286f11cca96e03729108a03d2952e7fd4ed8c21a841d3b69 test-node"
+    privileged: true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - net
     depends_on:
