@@ -1,0 +1,11 @@
+FROM app:latest
+
+RUN pip3 install coverage
+
+COPY tests /workdir
+#RUN groupadd -g 1000 test
+#RUN useradd -u 1000 -g 1000 -ms /bin/bash test
+#RUN chown -R 1000:1000 /workdir
+#USER test
+
+ENTRYPOINT [ "python3", "tests.py" ]

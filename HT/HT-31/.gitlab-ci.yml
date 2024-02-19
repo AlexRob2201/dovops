@@ -1,0 +1,41 @@
+stages:
+  - build
+  - test
+  - push
+
+Build:
+  image: docker:20.10.16
+  services:
+    - name: docker:20.10.16-dind
+      alias: docker
+  stage: build
+  script:
+    - docker compose build app
+    - docker compose build app-coverage
+    - docker save -o coverage.tar app-coverage
+    - docker save -o app.tar app
+  artifacts:
+    paths:
+      - coverage.tar
+      - app.tar
+  only:
+    refs:
+      - main
+
+Tests:
+  image: docker:20.10.16
+  services:
+    - name: docker:20.10.16-dind
+      alias: docker
+  stage: test
+  variables:
+    IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+  script:
+    - docker load -i coverage.tar
+    - docker load -i app.tar
+    - docker images
+    - docker compose up -d mysql
+    - docker compose up app-coverage && docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY && docker tag app:latest $IMAGE_TAG && docker push $IMAGE_TAG
+  only:
+    refs:
+      - main
