@@ -30,19 +30,11 @@ resource "aws_instance" "instances" {
   key_name                    = aws_key_pair.ssh_key.key_name
   associate_public_ip_address = var.is_public
   security_groups             = [aws_security_group.some_sg[each.key].id]
+  user_data                   = local.userdata
 
   root_block_device {
     volume_size = each.value.disk
   }
-
-
-  user_data = <<EOF
-  #!/bin/bash
-  sudo apt-get update 
-  sudo apt-get install -y docker.io
-
-  EOF
-
   tags = {
     Name : each.key
   }

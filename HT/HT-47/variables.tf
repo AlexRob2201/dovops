@@ -15,7 +15,9 @@ variable "name" {
   description = "Global name prefix"
   default     = "bukhenko"
 }
-
+variable "user_data" {
+  default = ""
+}
 
 locals {
   tags = {
@@ -23,6 +25,11 @@ locals {
     "Owner" : "Olexandr Bukhenko"
     "HT" : "47"
   }
+
+  userdata = var.user_data != "" ? var.user_data : templatefile("${path.module}/userdata.tpl", {
+    ssh_listen_port = 22
+    hostname        = var.name
+  })
 }
 
 
@@ -36,7 +43,7 @@ variable "instances" {
     "ec2" = {
       "disk"     = 20
       "type"     = "t2.micro"
-      "ssh_port" = 23
+      "ssh_port" = 22
     }
   }
 }
