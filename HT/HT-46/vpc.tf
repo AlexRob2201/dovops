@@ -14,7 +14,7 @@ resource "aws_subnet" "public_subnet" {
   map_public_ip_on_launch = "true"
 
   tags = {
-    Name = "my_public_subnet"
+    Name = "Bukhenko-ht-46"
   }
 }
 resource "aws_subnet" "private_subnet" {

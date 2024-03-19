@@ -6,7 +6,7 @@ variable "ami" {
 variable "instance_type" {
   description = "The type of instance to start"
   type        = string
-  default     = "t3.nano"
+  default     = "t2.nano"
 }
 variable "key_name" {
   description = "Key name of the Key Pair to use for the instance; which can be managed using the `aws_key_pair` resource"
