@@ -5,6 +5,7 @@ resource "aws_instance" "this" {
   ################################################################################
   # Require
   ################################################################################
+  count                  = var.ec2_psc
   ami                    = var.ami
   instance_type          = var.instance_type
   subnet_id              = var.subnet_id
@@ -13,7 +14,6 @@ resource "aws_instance" "this" {
   ################################################################################
   # Other
   ################################################################################
-  availability_zone           = var.availability_zone
   key_name                    = var.key_name
-  associate_public_ip_address = var.associate_public_ip_address
+  associate_public_ip_address = var.is_public
 }
