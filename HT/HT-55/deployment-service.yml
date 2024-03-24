@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: alex-ht-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: alex-ht
@@ -23,7 +23,7 @@ kind: Service
 metadata:
   name: nginx-service
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: alex-ht
   ports:
