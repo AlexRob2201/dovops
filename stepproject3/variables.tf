@@ -1,0 +1,3 @@
+variable "name" {
+  default = "bukhenko"
+}

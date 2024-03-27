@@ -6,12 +6,12 @@ variable "ami" {
 variable "instance_type" {
   description = "The type of instance to start"
   type        = string
-  default     = "t2.nano"
+  default     = "t2.micro"
 }
 variable "key_name" {
   description = "Key name of the Key Pair to use for the instance; which can be managed using the `aws_key_pair` resource"
   type        = string
-  default     = null
+  default     = "bukhenko-rsa"
 }
 variable "user_data" {
   description = "The user data to provide when launching the instance. Do not pass gzip-compressed data via this argument; see user_data_base64 instead"
@@ -23,7 +23,7 @@ variable "is_public" {
   type        = bool
   default     = true
 }
-variable "vpc_security_group_ids" {
+variable "security_groups" {
   description = "A list of security group IDs to associate with"
   type        = list(string)
   default     = null
@@ -33,19 +33,27 @@ variable "subnet_id" {
   type = string
   default = null
 }
+variable "region" {
+  description = "Choose default region for VPC"
+  default = "eu-central-1"
+}
 variable "name" {
   description = "Some name of ec2"
 }
-variable "vpc_id" {
-  description = "Assing subnet ID"
-  type        = string
-  default     = "vpc-06ae62935ffb33e2b"
-}
+
 variable "tags" {
 }
 locals {
-  tags = merge(var.tags, { Module = "ec2" })
+  tags = merge(var.tags, { Module = "ec2", Name = "${var.name}-ec2" })
 }
 variable "ec2_psc" {
   default = 1
+}
+variable "create" {
+  default = true
+}
+variable "userdata" {
+  description = "User data for EC2 instances"
+  type        = string
+  default     = null
 }

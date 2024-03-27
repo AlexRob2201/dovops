@@ -2,3 +2,5 @@
 .terraform.lock.hcl
 terraform.tfstate
 terraform.tfstate.backup
+bukhenko-rsa.pem
+id_rsa

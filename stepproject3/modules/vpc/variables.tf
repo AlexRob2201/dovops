@@ -16,7 +16,7 @@ variable "tags" {
 
 }
 locals {
-  tags                = merge(var.tags, { Module = "VPC", Name = "${var.name}" })
+  tags                = merge(var.tags, { Module = "VPC", Name = "${var.name}-VPC" })
   len_public_subnets  = max(length(var.public_subnets))
   len_private_subnets = max(length(var.private_subnets))
 
