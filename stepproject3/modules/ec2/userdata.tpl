@@ -1,21 +1,9 @@
 #cloud-config
-fqdn: ${hostname}
-package_update: true
-package_upgrade: true
-# preserve_hostname: true
-packages:
-  - iproute2
-  - net-tools
-  - resolvconf
-  - software-properties-common
-  - awscli
-  - docker.io
-
+#fqdn: ${hostname}
 users:
   - name: alex
     ssh-authorized-keys:
       - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCd0DKlVh7umU98abmDhGqyNqqggVoIPocd9VG5NZgIIoPafv7DNAHp/4pwqKgx58YVv7gz+5wZaU4z6YhRqyXcsK7bbgSHPPVTMwxbZrqoN0NUGimstaVzTI9Wyzeammcn5/6IREjFQ1fRDr247Jwptl3Bs0Tb9aGv/3orAfnsoR6wEDU4h3Ddu0gZ5YyI4KKGsxoFJ3u9jsZ6Djnv+Gz6MBq0rEye/jTAO0BeKSHEKxCi2ZOFmRPGnQPpMbI+wiQ1ScbUfsi+/AL2CXgXT/9T0/T0ug38fROcu+IsdnNqDNbu0mY9j/5bdulx9A+vpfr2zTVKQm411nb7mOxBjowklYz7GVkg8e8zFQe+5NRKtK8EJDSIUJ31bXCqa//zQzYdBFXRPsfmsQ2pUE3IrFdFgpU6w6rfgyNGedKyLbcD8+Hek048zT7XoTkEpSN4bhXQgPeSnFfxvzlLjeUZhmbsFOH+lr5zwANBnOyriNrRA4jSZmuSvLy+AsaeYYPVMIGxdO0GAVbFjZFBrHX0wEOsl9ZW2AZg5o9bdyJwh4O0gWH8bso90Ex/mOIpyt8emaCeem1c+Z9If1s7jRvvUp5c5pTiwfjVdk3QECW2fH++ec35r7kORyfkPmbRUT3e4fvryu4lyPWvQfa8LiIxpr8ZV4o/kH++LxK4SGSLn2rV2w== buxenko2201@gmail.com
-      - ${ssh_key_name}
     sudo: ["ALL=(ALL) NOPASSWD:ALL"]
     groups: sudo
     shell: /bin/bash
@@ -57,3 +45,11 @@ write_files:
 
 runcmd:
   - systemctl restart ssh
+  - usermod -aG docker alex
+
+
+package_update: true
+package_upgrade: true
+packages:
+  - docker.io
+  - docker-compose

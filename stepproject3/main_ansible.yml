@@ -14,3 +14,14 @@
         name: docker
         state: started
         enabled: true
+    - name: Pull nginx Docker image
+      docker_image:
+        name: nginx
+        source: pull
+    - name: Run nginx Docker container
+      docker_container:
+        name: nginx
+        image: nginx
+        state: started
+        ports:
+          - "8080:80"
