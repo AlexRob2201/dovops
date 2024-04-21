@@ -17,7 +17,12 @@ variable "ingress_rules" {
   type        = map(string)
   default = {
     "22" = "tcp",
-    "80" = "tcp"
+    "80" = "tcp",
+    "3000" = "tcp",
+    "9090" = "tcp",
+    "9100" = "tcp",
+    "9104" = "tcp",
+    "9101" = "tcp"
   }
 }
 variable "egress_rules" {
