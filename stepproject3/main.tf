@@ -83,14 +83,14 @@ ${join("\n", [for ec2 in module.step3_ec2 : "${ec2.tags.Name} ansible_host=${ec2
 # }
 
 
-module "alb" {
-  count          = terraform.workspace == "prod" ? 1 : 0
-  source         = "./modules/alb"
-  name           = "${var.name}"
-  tags           = local.tags
-  zone_id        = var.zone_id
-  alb_domain     = var.alb_domain
-  vpc_id         = module.step3_vpc.vpc_id
-  public_subnets = module.step3_vpc.public_subnets[*]
-  ec2_ids        = [for obj in module.step3_ec2 : obj.ec2_id]
-}
+# module "step3_alb" {
+#   count          = terraform.workspace == "prod" ? 1 : 0
+#   source         = "./modules/alb"
+#   name           = "${var.name}"
+#   tags           = local.tags
+#   zone_id        = var.zone_id
+#   alb_domain     = var.alb_domain
+#   vpc_id         = module.step3_vpc.vpc_id
+#   public_subnets = module.step3_vpc.public_subnets[*]
+#   ec2_ids        = [for obj in module.step3_ec2 : obj.ec2_id]
+# }

@@ -20,6 +20,3 @@ output "ec2_public_ip" {
     key => instance.public_ip
   }
 }
-output "alb" {
-  value = module.step3_alb.alb_dns
-}
