@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alex-test-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alex-test
+  template:
+    metadata:
+      labels:
+        app: alex-test
+    spec:
+      volumes:
+        - name: test-vol
+          persistentVolumeClaim:
+            claimName: test-volume-claim
+      containers:
+        - name: app
+          #image: testweb:1.0
+          image: alexrob2201/alexb.rob:24.04.27
+          imagePullPolicy: Never
+          #command: ["/app/start.sh"]
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - mountPath: "/mydir"
+              name: test-vol
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          env:
+          - name: test
+            value: alexsfdfsd
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+          startupProbe:
+            httpGet:
+              path: /rediness
+              port: 8080
+          readinessProbe:
+            httpGet:
+              path: /rediness
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 5
