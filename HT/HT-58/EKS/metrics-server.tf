@@ -4,6 +4,6 @@ resource "helm_release" "metrics" {
   repository       = "https://kubernetes-sigs.github.io/metrics-server"
   chart            = "metrics-server"
   version          = "3.12.1"
-  namespace        = "kube-system"
+  namespace        = "alex"
   create_namespace = true
 }
