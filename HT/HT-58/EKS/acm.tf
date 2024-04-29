@@ -4,7 +4,7 @@ data "aws_route53_zone" "zone" {
 }
 
 locals {
-  domain_name = "${var.name}-bukhenko.${var.zone_name}"
+  domain_name = "${var.name}.${var.zone_name}"
 }
 
 module "acm" {
@@ -22,6 +22,6 @@ module "acm" {
 
   tags = merge(
     var.tags,
-    { Name = "${var.name}-bukhenko-eks" }
+    { Name = "${var.name}-bukhenko-aws" }
   )
 }
