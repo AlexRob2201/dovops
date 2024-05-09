@@ -1,9 +1,9 @@
-resource "aws_eks_cluster" "danit" {
+resource "aws_eks_cluster" "bukhenko" {
   name     = var.name
   role_arn = aws_iam_role.cluster.arn
 
   vpc_config {
-    security_group_ids = [aws_security_group.danit-cluster.id]
+    security_group_ids = [aws_security_group.bukhenko-cluster.id]
     subnet_ids         = var.subnets_ids
   }
 
@@ -17,8 +17,8 @@ resource "aws_eks_cluster" "danit" {
   )
 }
 
-data "aws_eks_cluster_auth" "danit" {
-  name = aws_eks_cluster.danit.name
+data "aws_eks_cluster_auth" "bukhenko" {
+  name = aws_eks_cluster.bukhenko.name
 }
 
 resource "aws_eks_addon" "coredns" {
@@ -27,5 +27,5 @@ resource "aws_eks_addon" "coredns" {
   addon_version               = "v1.11.1-eksbuild.4"
   resolve_conflicts_on_create = "OVERWRITE"
 
-  depends_on = [aws_eks_node_group.danit-amd]
+  depends_on = [aws_eks_node_group.bukhenko-amd]
 }

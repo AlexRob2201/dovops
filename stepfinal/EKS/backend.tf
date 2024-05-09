@@ -7,7 +7,7 @@ terraform {
     encrypt        = true
     # Example
     #dynamodb_table = "lock-tf-eks"
-    dynamodb_table = "bukhenko-step" 
+    dynamodb_table = "bukhenko-tf-step" 
     # dynamo key LockID
     # Params tekan from -backend-config when terraform init
     #region = 

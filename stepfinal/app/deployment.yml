@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alexb-rob-test-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alexb-rob-test
+  template:
+    metadata:
+      labels:
+        app: alexb-rob-test
+    spec:
+      containers:
+        - name: app
+          image: alexrob2201/web-server:latest
+          ports:
+            - name: http
+              containerPort: 8080
+          

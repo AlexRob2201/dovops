@@ -33,23 +33,23 @@ resource "aws_iam_role_policy_attachment" "kubeedge-cluster-AmazonEKSVPCResource
 }
 
 data "tls_certificate" "cert" {
-  url = aws_eks_cluster.danit.identity[0].oidc[0].issuer
+  url = aws_eks_cluster.bukhenko.identity[0].oidc[0].issuer
 }
 
 resource "aws_iam_openid_connect_provider" "openid_connect" {
   client_id_list  = ["sts.amazonaws.com"]
   thumbprint_list = [data.tls_certificate.cert.certificates.0.sha1_fingerprint]
-  url             = aws_eks_cluster.danit.identity[0].oidc[0].issuer
+  url             = aws_eks_cluster.bukhenko.identity[0].oidc[0].issuer
 }
 
 module "oidc-provider-data-bukhenko" {
   source     = "reegnz/oidc-provider-data/aws"
   version    = "0.0.3"
-  issuer_url = aws_eks_cluster.danit.identity[0].oidc[0].issuer
+  issuer_url = aws_eks_cluster.bukhenko.identity[0].oidc[0].issuer
 }
 
 # For nodes
-resource "aws_iam_role" "danit-node" {
+resource "aws_iam_role" "bukhenko-node" {
   name = "${var.name}-bukhenko-eks-node"
 
   assume_role_policy = <<POLICY
@@ -101,20 +101,20 @@ resource "aws_iam_policy" "secrets_policy" {
 
 resource "aws_iam_role_policy_attachment" "kubeedge-node-AmazonSecretsPolicy" {
   policy_arn = aws_iam_policy.secrets_policy.arn
-  role       = aws_iam_role.danit-node.name
+  role       = aws_iam_role.bukhenko-node.name
 }
 
 resource "aws_iam_role_policy_attachment" "kubeedge-node-AmazonEKSWorkerNodePolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
-  role       = aws_iam_role.danit-node.name
+  role       = aws_iam_role.bukhenko-node.name
 }
 
 resource "aws_iam_role_policy_attachment" "kubeedge-node-AmazonEKS_CNI_Policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
-  role       = aws_iam_role.danit-node.name
+  role       = aws_iam_role.bukhenko-node.name
 }
 
 resource "aws_iam_role_policy_attachment" "kubeedge-node-AmazonEC2ContainerRegistryReadOnly" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-  role       = aws_iam_role.danit-node.name
+  role       = aws_iam_role.bukhenko-node.name
 }

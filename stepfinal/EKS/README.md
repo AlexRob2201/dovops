@@ -1,9 +1,3 @@
-### Terraform init
-```sh
-terraform init -backend-config "region=eu-central-1" -backend-config "profile=danit"
-```
-
-### Terraform apply
-```sh
-terraform apply -var="iam_profile=danit"
-```
+# Commands that help
+ - aws eks --region eu-central-1 update-kubeconfig --name bukhenko --profile mfa
+ - kubectl config use-context arn:aws:eks:eu-central-1:105742781415:cluster/bukhenko

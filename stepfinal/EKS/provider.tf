@@ -5,12 +5,12 @@ provider "aws" {
 }
 
 provider "kubernetes" {
-  host                   = aws_eks_cluster.danit.endpoint
-  cluster_ca_certificate = base64decode(aws_eks_cluster.danit.certificate_authority.0.data)
-  token                  = data.aws_eks_cluster_auth.danit.token
+  host                   = aws_eks_cluster.bukhenko.endpoint
+  cluster_ca_certificate = base64decode(aws_eks_cluster.bukhenko.certificate_authority.0.data)
+  token                  = data.aws_eks_cluster_auth.bukhenko.token
 }
 
-data "aws_availability_zones" "available" {}
+#data "aws_availability_zones" "available" {}
 
 # Not required: currently used in conjunction with using
 # icanhazip.com to determine local workstation external IP
@@ -29,11 +29,12 @@ data "aws_availability_zones" "available" {}
 #  }
 #}
 
+
 provider "helm" {
   kubernetes {
-    host                   = aws_eks_cluster.danit.endpoint
-    cluster_ca_certificate = base64decode(aws_eks_cluster.danit.certificate_authority.0.data)
-    token                  = data.aws_eks_cluster_auth.danit.token
+    host                   = aws_eks_cluster.bukhenko.endpoint
+    cluster_ca_certificate = base64decode(aws_eks_cluster.bukhenko.certificate_authority.0.data)
+    token                  = data.aws_eks_cluster_auth.bukhenko.token
   }
 }
 

@@ -1,7 +1,7 @@
-resource "aws_eks_node_group" "danit-amd" {
-  cluster_name    = aws_eks_cluster.danit.name
+resource "aws_eks_node_group" "bukhenko-amd" {
+  cluster_name    = aws_eks_cluster.bukhenko.name
   node_group_name = "${var.name}-bukhenko-amd"
-  node_role_arn   = aws_iam_role.danit-node.arn
+  node_role_arn   = aws_iam_role.bukhenko-node.arn
   subnet_ids      = var.subnets_ids
 
   scaling_config {
